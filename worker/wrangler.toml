@@ -1,0 +1,30 @@
+name = "momus-deployer"
+main = "src/index.ts"
+compatibility_date = "2026-09-13"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "momus-usage"
+database_id = "REPLACE_WITH_D1_ID"
+
+[[kv_namespaces]]
+binding = "API_KEYS"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "METER_CURSOR"
+id = "REPLACE_WITH_KV_ID_2"
+
+[durable_objects]
+bindings = [{ name = "USAGE_DO", class_name = "UsageAggregator" }]
+
+[[migrations]]
+tag = "v2-e2"
+new_sqlite_classes = ["UsageAggregator"]
+
+[triggers]
+crons = ["*/30 * * * *"]
+
+[observability]
+enabled = true
